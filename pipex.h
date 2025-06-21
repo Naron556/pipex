@@ -6,7 +6,7 @@
 /*   By: aoperacz <aoperacz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:31:19 by aoperacz          #+#    #+#             */
-/*   Updated: 2025/06/20 23:50:22 by aoperacz         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:55:42 by aoperacz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ int		check_outfile(char *path);
 char	*get_path(char *cmd, char **envp);
 char	**get_args(char *cmd);
 void	free_tab(char **tab);
+char	**set_args(char **argv, int *file_fd, int i_o);
+void	close_fds(int fd, int pipe_fds[2]);
 #endif

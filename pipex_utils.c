@@ -6,7 +6,7 @@
 /*   By: aoperacz <aoperacz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:22:52 by aoperacz          #+#    #+#             */
-/*   Updated: 2025/06/20 23:48:25 by aoperacz         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:53:38 by aoperacz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*get_path(char *cmd, char **envp)
 		}
 		i++;
 	}
+	free_tab(paths);
 	return (NULL);
 }
 
@@ -61,4 +62,31 @@ char	**get_args(char *cmd)
 		return (NULL);
 	args = ft_split(cmd, ' ');
 	return (args);
+}
+
+char	**set_args(char **argv, int *file_fd, int i_o)
+{
+	char	**args;
+
+	if (i_o == 0)
+	{
+		*file_fd = check_infile(argv[1]);
+		args = get_args(argv[2]);
+	}
+	else
+	{
+		*file_fd = check_outfile(argv[4]);
+		args = get_args(argv[3]);
+	}
+	if (*file_fd <= 0)
+		return (free_tab(args), NULL);
+	return (args);
+}
+
+void	close_fds(int fd, int pipe_fds[2])
+{
+	if (fd > 0)
+		close(fd);
+	close(pipe_fds[0]);
+	close(pipe_fds[1]);
 }
